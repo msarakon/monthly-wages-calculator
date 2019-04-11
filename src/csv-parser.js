@@ -1,32 +1,33 @@
 class CSVParser {
 
-    toJSON(file, callback) {
+    static toJSON(file, callback) {
         if (!this.isAllowedType(file.name)) {
             throw 'Please upload a .csv file';
         }
         let reader = new FileReader();
-        let output = [];
+        let output = {};
         reader.onload = () => {
             let rows = reader.result.split('\n');
-            rows.shift();
-            rows.forEach(row => output.push(this.rowToJSON(row)));
+            rows.shift(); // remove the header row
+            rows.forEach(row => {
+                let values = row.split(',');
+                if (values.length < 5) return;
+                let personId = values[1];
+                if (!(personId in output)) {
+                    output[personId] = { name: values[0], shifts: [] };
+                }
+                output[personId].shifts.push({
+                    date: values[2],
+                    start: values[3],
+                    end: values[4]
+                });
+            });
             callback(output);
         };
         reader.readAsBinaryString(file);
     }
 
-    rowToJSON(row) {
-        let values = row.split(',');
-        return {
-            personName: values[0],
-            personId: values[1],
-            date: values[2],
-            startTime: values[3],
-            endTime: values[4]
-        };
-    }
-
-    isAllowedType(filename) {
+    static isAllowedType(filename) {
         return /(\.csv)$/i.exec(filename);
     }
 }

@@ -1,12 +1,14 @@
 import React from 'react';
 import CSVParser from './csv-parser';
+import WageCalculator from './wage-calculator';
 
 class CSVUpload extends React.Component {
 
     handleFileUpload(event) {
+        let rows = [];
         let file = event.target.files[0];
-        new CSVParser().toJSON(file, function() {
-            // todo
+        CSVParser.toJSON(file, function(personData) {
+            rows = WageCalculator.getMonthlyWages(personData);
         });
     }
 
