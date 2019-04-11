@@ -39,7 +39,13 @@
     },
     "babel": {
         "presets": [
-            "@babel/preset-env",
+            [
+                "@babel/preset-env",
+                {
+                    "corejs": "2",
+                    "useBuiltIns": "entry"
+                }
+            ],
             "@babel/preset-react"
         ]
     },
@@ -64,7 +70,10 @@
             }
         },
         "rules": {
-            "semi": ["error", "always"]
+            "semi": [
+                "error",
+                "always"
+            ]
         }
     }
 }

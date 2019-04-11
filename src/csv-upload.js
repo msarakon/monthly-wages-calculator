@@ -1,10 +1,13 @@
 import React from 'react';
+import CSVParser from './csv-parser';
 
 class CSVUpload extends React.Component {
 
     handleFileUpload(event) {
-        console.log(event);
-        // handle file upload
+        let file = event.target.files[0];
+        new CSVParser().toJSON(file, function() {
+            // todo
+        });
     }
 
     render() {
