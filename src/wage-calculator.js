@@ -4,10 +4,10 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
 const hourlyWage = 4.25;
-// const eveningCompensationPerHour = 1.25;
 const baseHours = 8;
-// const eveningStartTime = '19:00';
-// const eveningEndTime = '6:00';
+const eveningBonusPerHour = 1.25;
+const eveningStartHour = 19;
+const eveningEndHour = 6;
 
 class WageCalculator {
 
@@ -34,9 +34,7 @@ class WageCalculator {
             let hours = end.diff(start, 'minute') / 60;
             dailyWage += hours * hourlyWage;
             dailyWage += this.calculateOvertimeBonus(hours);
-            // let eveningStart = this.parseDate(shift.date, eveningStartTime);
-            // let eveningEnd = this.parseDate(shift.date, eveningEndTime);
-            // let earlyHours = eveningEnd.diff(start, 'hours');
+            dailyWage += this.calculateEveningBonus(start, end);
             monthlyWage += dailyWage;
         });
         return monthlyWage;
@@ -63,8 +61,26 @@ class WageCalculator {
              + hours100 * hourlyWage;
     }
 
-    static calculateOvertimeBonus25(hours) {
-        return hours * hourlyWage * .25;
+    /**
+     * Calculates evening work compensation $ for given start and end dayjs objects.
+     * @param {Object} start 
+     * @param {Object} end 
+     */
+    static calculateEveningBonus(start, end) {
+        let hours = 0;
+        let prevEveningEnd = start.clone().hour(eveningEndHour).minute(0);
+        if (start.isBefore(prevEveningEnd)) {
+            hours += prevEveningEnd.diff(start, 'minute') / 60; 
+        }
+        let nextEveningStart = start.clone().hour(eveningStartHour).minute(0);
+        if (end.isAfter(nextEveningStart)) {
+            if (start.isAfter(nextEveningStart)) {
+                hours += end.diff(start, 'minute') / 60;
+            } else {
+                hours += end.diff(nextEveningStart, 'minute') / 60;
+            }
+        }
+        return hours * eveningBonusPerHour;
     }
 
     static parseDate(date, time) {
