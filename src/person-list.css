@@ -1,0 +1,24 @@
+.person-list {
+    font-size: 14px;
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.person-list thead tr {
+    border-bottom: 1px solid black;
+}
+
+.person-list th,
+.person-list td {
+    padding: .5em 4em;
+    text-align: left;
+}
+
+.person-list .right-align {
+    text-align: right;
+}
+
+.person-list tr:nth-child(odd) td {
+    background-color: rgba(0, 0, 0, .05);
+}

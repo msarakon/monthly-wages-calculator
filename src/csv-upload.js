@@ -2,6 +2,7 @@ import React from 'react';
 import CSVParser from './csv-parser';
 import WageCalculator from './wage-calculator';
 import PersonList from './person-list';
+import './csv-upload.css';
 
 class App extends React.Component {
 
@@ -22,7 +23,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <input id="file-upload" type="file" onChange={this.handleFileUpload} />
                 <PersonList data={this.state.personRows} />
             </div>

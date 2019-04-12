@@ -19,6 +19,7 @@
         "@babel/preset-react": "7.0.0",
         "babel-jest": "24.7.1",
         "babel-loader": "8.0.5",
+        "css-loader": "2.1.1",
         "enzyme": "3.9.0",
         "enzyme-adapter-react-16": "1.12.1",
         "eslint": "5.16.0",
@@ -26,6 +27,7 @@
         "eslint-plugin-react": "7.12.4",
         "html-webpack-plugin": "3.2.0",
         "jest": "24.7.1",
+        "style-loader": "0.23.1",
         "webpack": "4.29.6",
         "webpack-cli": "3.3.0"
     },
@@ -36,7 +38,10 @@
     "jest": {
         "setupFiles": [
             "./test/setup-tests.js"
-        ]
+        ],
+        "moduleNameMapper": {
+            "\\.(css)$": "<rootDir>/test/style-mock.js"
+        }
     },
     "babel": {
         "presets": [
