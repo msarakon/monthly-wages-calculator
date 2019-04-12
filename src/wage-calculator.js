@@ -58,6 +58,7 @@ class WageCalculator {
             dailyWage += this.calculateEveningBonus(start, end);
             monthlyWage += dailyWage;
         });
+        if (isNaN(monthlyWage)) throw 'Something went wrong! Bad data format.';
         return Math.round(monthlyWage * 100) / 100;
     }
 

@@ -32,6 +32,6 @@ test('should throw an error in case of wrong file type', () => {
     try {
         CSVParser.toJSON(file, function(){});
     } catch (ex) {
-        expect(ex).toBe('Please upload a .csv file');
+        expect(ex).toBe('Please upload a .csv file! ヽ(#ﾟДﾟ)ﾉ');
     }
 });

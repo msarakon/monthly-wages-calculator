@@ -1,8 +1,13 @@
+/**
+ * Parses person data from a CSV file.
+ * TODO: Better data validation.
+ * For now, WageCalculator throws an exception if the calculated value is NaN.
+ */
 class CSVParser {
 
     static toJSON(file, callback) {
         if (!this.isAllowedType(file.name)) {
-            throw 'Please upload a .csv file';
+            throw 'Please upload a .csv file! ヽ(#ﾟДﾟ)ﾉ';
         }
         let reader = new FileReader();
         let output = {};

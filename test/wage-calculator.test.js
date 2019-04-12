@@ -48,6 +48,17 @@ test('should calculate monthly wages correctly', () => {
     expect(WageCalculator.getMonthlyWages(data)).toEqual(expected);
 });
 
+test('should throw an exception in case of bad data', () => {
+    let data = { 123: { name: 'Test Foobar', shifts: [
+        { date: 'x.y.zzzz', start: 'bad', end: 'data' }
+    ] } };
+    try {
+        WageCalculator.getMonthlyWages(data);
+    } catch (ex) {
+        expect(ex).toBe('Something went wrong! Bad data format.');
+    }
+});
+
 test('should calculate overtime bonus correctly', () => {
     expect(WageCalculator.calculateOvertimeBonus(3)).toBe(0);
     expect(WageCalculator.calculateOvertimeBonus(8)).toBe(0);
