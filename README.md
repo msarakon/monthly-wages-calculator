@@ -1,6 +1,7 @@
 # monthly-wages-calculator
 
 ### How to run
+Node.js is required (https://nodejs.org/en/)
 
     npm install
     npm run build
