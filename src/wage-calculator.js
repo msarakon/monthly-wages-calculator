@@ -30,7 +30,9 @@ class WageCalculator {
             let dailyWage = 0;
             let start = this.parseDate(shift.date, shift.start);
             let end = this.parseDate(shift.date, shift.end);
-            if (end.isBefore(start)) end.add(1, 'day');
+            if (end.isBefore(start)) {
+                end = end.add(1, 'day');
+            }
             let hours = end.diff(start, 'minute') / 60;
             dailyWage += hours * hourlyWage;
             dailyWage += this.calculateOvertimeBonus(hours);
@@ -70,7 +72,11 @@ class WageCalculator {
         let hours = 0;
         let prevEveningEnd = start.clone().hour(eveningEndHour).minute(0);
         if (start.isBefore(prevEveningEnd)) {
-            hours += prevEveningEnd.diff(start, 'minute') / 60; 
+            if (end.isBefore(prevEveningEnd)) {
+                hours += end.diff(start, 'minute') / 60;
+            } else {
+                hours += prevEveningEnd.diff(start, 'minute') / 60;
+            }
         }
         let nextEveningStart = start.clone().hour(eveningStartHour).minute(0);
         if (end.isAfter(nextEveningStart)) {
