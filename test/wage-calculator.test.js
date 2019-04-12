@@ -32,17 +32,17 @@ test('should calculate monthly wages correctly', () => {
         { 
             id: '123',
             name: 'Test Foobar',
-            monthlyWage: 8 * 4.25
+            monthlyWage: Math.round((8 * 4.25) * 100) / 100
         },
         {
             id: '456',
             name: 'Lorem Ipsum',
-            monthlyWage: 8 * 4.25 + 8 * 1.25
+            monthlyWage: Math.round((8 * 4.25 + 8 * 1.25) * 100) / 100
         },
         {
             id: '789',
             name: 'Peppa Pig',
-            monthlyWage: 10 * 4.25 + 2 * 4.25 * .25
+            monthlyWage: Math.round((10 * 4.25 + 2 * 4.25 * .25) * 100) / 100
         }
     ];
     expect(WageCalculator.getMonthlyWages(data)).toEqual(expected);

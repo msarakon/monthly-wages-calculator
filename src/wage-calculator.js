@@ -11,6 +11,10 @@ const eveningEndHour = 6;
 
 class WageCalculator {
 
+    /**
+     * Returns persons and their monthly wages, based on shift data.
+     * @param {Object} shiftData 
+     */
     static getMonthlyWages(shiftData) {
         let output = [];
         for (const personId in shiftData) {
@@ -24,6 +28,10 @@ class WageCalculator {
         return output;
     }
 
+    /**
+     * Calculates monthly wage based on shifts, rounded to 2 decimals.
+     * @param {Array} shifts 
+     */
     static calculateMonthlyWage(shifts) {
         let monthlyWage = 0;
         shifts.forEach(shift => {
@@ -39,9 +47,13 @@ class WageCalculator {
             dailyWage += this.calculateEveningBonus(start, end);
             monthlyWage += dailyWage;
         });
-        return monthlyWage;
+        return Math.round(monthlyWage * 100) / 100;
     }
 
+    /**
+     * Calculates overtime compensation based on total hours.
+     * @param {Number} hours 
+     */
     static calculateOvertimeBonus(hours) {
         let overtimeHours = hours - baseHours;
         if (overtimeHours <= 0) return 0;
@@ -89,6 +101,11 @@ class WageCalculator {
         return hours * eveningBonusPerHour;
     }
 
+    /**
+     * Parses a dayjs object from D.M.YYY and H:mm strings.
+     * @param {String} date 
+     * @param {String} time 
+     */
     static parseDate(date, time) {
         return dayjs(date + ' ' + time, { format: 'D.M.YYYY H:mm' });
     }
