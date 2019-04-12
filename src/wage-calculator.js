@@ -81,24 +81,52 @@ class WageCalculator {
      * @param {Object} end 
      */
     static calculateEveningBonus(start, end) {
-        let hours = 0;
-        let prevEveningEnd = start.clone().hour(eveningEndHour).minute(0);
-        if (start.isBefore(prevEveningEnd)) {
-            if (end.isBefore(prevEveningEnd)) {
-                hours += end.diff(start, 'minute') / 60;
+        let earlyHours = this.calculateEarlyHours(start, end);
+        let lateHours = this.calculateLateHours(start, end);
+        return (earlyHours + lateHours) * eveningBonusPerHour;
+    }
+
+    /**
+     * Calculates work hours done during the previous night's shift.
+     * @param {Object} start 
+     * @param {Object} end 
+     */
+    static calculateEarlyHours(start, end) {
+        let eveningEnd = start.clone().hour(eveningEndHour).minute(0);
+        if (start.isBefore(eveningEnd)) {
+            if (end.isBefore(eveningEnd)) {
+                return this.diffHours(end, start);
             } else {
-                hours += prevEveningEnd.diff(start, 'minute') / 60;
+                return this.diffHours(eveningEnd, start);
             }
         }
-        let nextEveningStart = start.clone().hour(eveningStartHour).minute(0);
-        if (end.isAfter(nextEveningStart)) {
-            if (start.isAfter(nextEveningStart)) {
-                hours += end.diff(start, 'minute') / 60;
+        return 0;
+    }
+
+    /**
+     * Calculates work hours done during the following night's shift.
+     * @param {Object} start 
+     * @param {Object} end 
+     */
+    static calculateLateHours(start, end) {
+        let eveningStart = start.clone().hour(eveningStartHour).minute(0);
+        if (end.isAfter(eveningStart)) {
+            if (start.isAfter(eveningStart)) {
+                return this.diffHours(end, start);
             } else {
-                hours += end.diff(nextEveningStart, 'minute') / 60;
+                return this.diffHours(end, eveningStart);
             }
         }
-        return hours * eveningBonusPerHour;
+        return 0;
+    }
+
+    /**
+     * Calculates the difference between two dayjs objects in hours.
+     * @param {Object} from 
+     * @param {Object} to 
+     */
+    static diffHours(from, to) {
+        return from.diff(to, 'minute') / 60;
     }
 
     /**

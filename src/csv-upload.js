@@ -9,7 +9,6 @@ class CSVUpload extends React.Component {
         let file = event.target.files[0];
         CSVParser.toJSON(file, function(personData) {
             rows = WageCalculator.getMonthlyWages(personData);
-            console.log(rows);
         });
     }
 
