@@ -26,6 +26,13 @@ test('should calculate monthly wages correctly', () => {
             shifts: [
                 { date: '12.4.2019', start: '6:00', end: '16:00' } 
             ]
+        },
+        '999': {
+            name: 'Double Shift',
+            shifts: [
+                { date: '12.4.2019', start: '10:00', end: '14:00' },
+                { date: '12.4.2019', start: '17:00', end: '22:00' }
+            ]
         }
     };
     let expected = [
@@ -43,6 +50,11 @@ test('should calculate monthly wages correctly', () => {
             id: '789',
             name: 'Peppa Pig',
             monthlyWage: Math.round((10 * 4.25 + 2 * 4.25 * .25) * 100) / 100
+        },
+        {
+            id: '999',
+            name: 'Double Shift',
+            monthlyWage: Math.round((9 * 4.25 + 1 * 4.25 * .25 + 3 * 1.25) * 100) / 100
         }
     ];
     expect(WageCalculator.getMonthlyWages(data)).toEqual(expected);

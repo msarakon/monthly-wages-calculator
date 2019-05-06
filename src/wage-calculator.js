@@ -45,21 +45,32 @@ class WageCalculator {
      */
     static calculateMonthlyWage(shifts) {
         let monthlyWage = 0;
+        const shiftsPerDay = shifts.reduce((acc, shift) => {
+            (acc[shift.date] = acc[shift.date] || []).push(shift);
+            return acc;
+        }, {});
+        Object.values(shiftsPerDay).forEach(shifts => {
+            monthlyWage += this.calculateDailyWage(shifts);
+        });
+        if (isNaN(monthlyWage)) throw 'Something went wrong! Bad data format.';
+        return Math.round(monthlyWage * 100) / 100;
+    }
+
+    static calculateDailyWage(shifts) {
+        let dailyWage = 0;
+        let hours = 0;
         shifts.forEach(shift => {
-            let dailyWage = 0;
             let start = this.parseDate(shift.date, shift.start);
             let end = this.parseDate(shift.date, shift.end);
             if (end.isBefore(start)) {
                 end = end.add(1, 'day');
             }
-            let hours = this.diffHours(end, start);
-            dailyWage += hours * this.HOURLY_WAGE;
-            dailyWage += this.calculateOvertimeBonus(hours);
+            hours += this.diffHours(end, start);
             dailyWage += this.calculateEveningBonus(start, end);
-            monthlyWage += dailyWage;
         });
-        if (isNaN(monthlyWage)) throw 'Something went wrong! Bad data format.';
-        return Math.round(monthlyWage * 100) / 100;
+        dailyWage += hours * this.HOURLY_WAGE;
+        dailyWage += this.calculateOvertimeBonus(hours);
+        return dailyWage;
     }
 
     /**
