@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+- stable
+cache:
+  directories:
+    - "node_modules"
+install:
+- npm install
+- npm install -g codecov
+script:
+- npm test -- --collect-coverage
+- codecov
+- npm run build
