@@ -2,13 +2,13 @@ import dayjs from 'dayjs';
 import WageCalculator from '../src/wage-calculator';
 
 test('should calculate monthly wages correctly with 0 shifts', () => {
-    let data = { 123: { name: 'Test Foobar', shifts: [] } };
-    let expected = [{ id: '123', name: 'Test Foobar', monthlyWage: 0 }];
+    const data = { 123: { name: 'Test Foobar', shifts: [] } };
+    const expected = [{ id: '123', name: 'Test Foobar', monthlyWage: 0 }];
     expect(WageCalculator.getMonthlyWages(data)).toEqual(expected);
 });
 
 test('should calculate monthly wages correctly', () => {
-    let data = {
+    const data = {
         '123': {
             name: 'Test Foobar',
             shifts: [
@@ -35,7 +35,7 @@ test('should calculate monthly wages correctly', () => {
             ]
         }
     };
-    let expected = [
+    const expected = [
         { 
             id: '123',
             name: 'Test Foobar',
@@ -61,7 +61,7 @@ test('should calculate monthly wages correctly', () => {
 });
 
 test('should throw an exception in case of bad data', () => {
-    let data = { 123: { name: 'Test Foobar', shifts: [
+    const data = { 123: { name: 'Test Foobar', shifts: [
         { date: 'x.y.zzzz', start: 'bad', end: 'data' }
     ] } };
     try {

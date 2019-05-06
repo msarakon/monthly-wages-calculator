@@ -9,15 +9,15 @@ class CSVParser {
         if (!this.isAllowedType(file.name)) {
             throw 'Please upload a .csv file! ヽ(#ﾟДﾟ)ﾉ';
         }
-        let reader = new FileReader();
-        let output = {};
+        const reader = new FileReader();
+        const output = {};
         reader.onload = () => {
-            let rows = reader.result.split('\n');
+            const rows = reader.result.split('\n');
             rows.shift(); // remove the header row
             rows.forEach(row => {
-                let values = row.split(',');
+                const values = row.split(',');
                 if (values.length < 5) return;
-                let personId = values[1];
+                const personId = values[1];
                 if (!(personId in output)) {
                     output[personId] = { name: values[0], shifts: [] };
                 }

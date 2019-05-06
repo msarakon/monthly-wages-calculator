@@ -27,9 +27,9 @@ class WageCalculator {
      * @param {Object} shiftData 
      */
     static getMonthlyWages(shiftData) {
-        let output = [];
+        const output = [];
         for (const personId in shiftData) {
-            let personData = shiftData[personId];
+            const personData = shiftData[personId];
             output.push({
                 id: personId,
                 name: personData.name,
@@ -60,7 +60,7 @@ class WageCalculator {
         let dailyWage = 0;
         let hours = 0;
         shifts.forEach(shift => {
-            let start = this.parseDate(shift.date, shift.start);
+            const start = this.parseDate(shift.date, shift.start);
             let end = this.parseDate(shift.date, shift.end);
             if (end.isBefore(start)) {
                 end = end.add(1, 'day');
@@ -78,7 +78,7 @@ class WageCalculator {
      * @param {Number} hours 
      */
     static calculateOvertimeBonus(hours) {
-        let overtimeHours = hours - this.BASE_HOURS;
+        const overtimeHours = hours - this.BASE_HOURS;
         if (overtimeHours <= 0) return 0;
         let hours1 = 0;
         let hours2 = 0;
@@ -104,8 +104,8 @@ class WageCalculator {
      * @param {Object} end 
      */
     static calculateEveningBonus(start, end) {
-        let earlyHours = this.calculateEarlyHours(start, end);
-        let lateHours = this.calculateLateHours(start, end);
+        const earlyHours = this.calculateEarlyHours(start, end);
+        const lateHours = this.calculateLateHours(start, end);
         return (earlyHours + lateHours) * this.EVENING_BONUS;
     }
 
@@ -115,7 +115,7 @@ class WageCalculator {
      * @param {Object} end 
      */
     static calculateEarlyHours(start, end) {
-        let eveningEnd = start.clone().hour(this.EVENING_END_HOUR).minute(0);
+        const eveningEnd = start.clone().hour(this.EVENING_END_HOUR).minute(0);
         if (start.isBefore(eveningEnd)) {
             if (end.isBefore(eveningEnd)) {
                 return this.diffHours(end, start);
@@ -132,7 +132,7 @@ class WageCalculator {
      * @param {Object} end 
      */
     static calculateLateHours(start, end) {
-        let eveningStart = start.clone().hour(this.EVENING_START_HOUR).minute(0);
+        const eveningStart = start.clone().hour(this.EVENING_START_HOUR).minute(0);
         if (end.isAfter(eveningStart)) {
             if (start.isAfter(eveningStart)) {
                 return this.diffHours(end, start);

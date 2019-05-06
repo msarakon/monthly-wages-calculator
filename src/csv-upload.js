@@ -17,12 +17,12 @@ class App extends React.Component {
 
     handleFileUpload(event) {
         this.setState({ personRows: [] });
-        let file = event.target.files[0];
-        let _this = this;
+        const file = event.target.files[0];
+        const _this = this;
         try {
             CSVParser.toJSON(file, function(personData) {
                 try {
-                    let rows = WageCalculator.getMonthlyWages(personData);
+                    const rows = WageCalculator.getMonthlyWages(personData);
                     _this.setState({
                         personRows: rows,
                         error: ''
