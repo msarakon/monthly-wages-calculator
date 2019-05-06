@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/msarakon/monthly-wages-calculator.svg?branch=master)](https://travis-ci.org/msarakon/monthly-wages-calculator) [![codecov](https://codecov.io/gh/msarakon/monthly-wages-calculator/branch/master/graph/badge.svg)](https://codecov.io/gh/msarakon/monthly-wages-calculator)
+
 # monthly-wages-calculator
 
 ### How to run
